@@ -45,15 +45,3 @@ PrepBridge solves these challenges by providing a data-driven and structured pla
 - ⚙️ System configuration settings
 
 ---
-
-## 🧠 Resume–JD Matching Approach
-
-PrepBridge uses rule-based NLP techniques:
-
-- Text extraction (PDF parsing)
-- Text normalization & tokenization
-- Skill-based keyword extraction
-- Rule-based scoring mechanism
-- Company focus distribution analysis
-
-### Match Score Formula
