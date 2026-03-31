@@ -201,7 +201,8 @@ const LoginPage = () => {
     variant="outline"
     className="w-full"
     onClick={() => {
-      window.location.href = "http://localhost:5000/api/auth/google";
+      const backendUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api$/, '') || 'http://localhost:5000';
+      window.location.href = `${backendUrl}/api/auth/google`;
     }}
   >
     <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
@@ -230,7 +231,8 @@ const LoginPage = () => {
     variant="outline"
     className="w-full"
     onClick={() => {
-      window.location.href = "http://localhost:5000/api/auth/github";
+      const backendUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api$/, '') || 'http://localhost:5000';
+      window.location.href = `${backendUrl}/api/auth/github`;
     }}
   >
     <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
