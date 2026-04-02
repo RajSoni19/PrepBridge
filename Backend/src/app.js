@@ -64,6 +64,31 @@ const isAllowedDevLanOrigin = (origin) => {
   }
 };
 
+const isAllowedVercelOrigin = (origin) => {
+  try {
+    const url = new URL(origin);
+    const host = (url.hostname || '').toLowerCase();
+
+    // Only consider Vercel-hosted frontend origins.
+    if (!host.endsWith('.vercel.app')) return false;
+
+    // Guardrail: only allow Vercel wildcard if at least one trusted Vercel
+    // origin is explicitly configured via env vars.
+    const hasTrustedVercelOrigin = configuredOrigins.some((configuredOrigin) => {
+      try {
+        const configuredHost = (new URL(configuredOrigin).hostname || '').toLowerCase();
+        return configuredHost.endsWith('.vercel.app');
+      } catch {
+        return false;
+      }
+    });
+
+    return hasTrustedVercelOrigin;
+  } catch {
+    return false;
+  }
+};
+
 // ================================
 // MIDDLEWARE
 // ================================
@@ -80,6 +105,12 @@ app.use(cors({
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Production convenience: allow Vercel preview/branch deployment domains
+    // once at least one Vercel origin is trusted in env configuration.
+    if (isAllowedVercelOrigin(origin)) {
       return callback(null, true);
     }
 
