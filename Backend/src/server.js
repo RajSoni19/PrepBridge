@@ -1,6 +1,7 @@
 // src/server.js
 
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const http = require("http");
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
